@@ -44,28 +44,37 @@ export default function RecipeDetailsDialog({
         <div className="">
           <h4 className="font-semibold">Ingredients</h4>
           <div className="flex flex-col gap-2">
-            {recipe.ingredients.map((ing) => (
-              <span className="flex items-center gap-2 pl-4">
-                <Circle className="size-2 fill-black" /> {ing}
-              </span>
-            ))}
+            {recipe.ingredients &&
+              recipe.ingredients.length > 0 &&
+              recipe.ingredients.map((ing) => (
+                <span className="flex items-center gap-2 pl-4">
+                  <Circle className="size-2 fill-black" /> {ing}
+                </span>
+              ))}
           </div>
         </div>
         <div>
           <h4 className="font-semibold">Instructions</h4>
           <div className="flex flex-col gap-2">
-            {recipe.instructions.map((ins, index) => (
-              <span className="pl-4">
-                {index + 1}. {ins}
-              </span>
-            ))}
+            {recipe.instructions &&
+              recipe.instructions.length > 0 &&
+              recipe.instructions.map((ins, index) => (
+                <span className="pl-4">
+                  {index + 1}. {ins}
+                </span>
+              ))}
           </div>
         </div>
 
-        <div className="flex justify-between items-center border border-primary bg-muted/50 p-2 rounded-md">
-          <h4 className=" text-base text-muted-foreground">Good For:</h4>
-          <span className="underline text-xl"> {recipe.servings} Servings</span>
-        </div>
+        {recipe.servings && (
+          <div className="flex justify-between items-center border border-primary bg-muted/50 p-2 rounded-md">
+            <h4 className=" text-base text-muted-foreground">Good For:</h4>
+            <span className="underline text-xl">
+              {" "}
+              {recipe.servings} Servings
+            </span>
+          </div>
+        )}
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline"> Close</Button>

@@ -16,12 +16,22 @@ export default function DishCard({
   isSelected,
   setIsSelected,
   recipe,
-  isFavorite
+  setFavorites,
+  setRecipes,
+  isFavorite,
+  isUserDefined,
 }: {
   isSelected: number;
   setIsSelected: Dispatch<SetStateAction<number>>;
   recipe: Recipe;
-  isFavorite?: boolean
+  setFavorites: Dispatch<SetStateAction<number[]>>;
+  setRecipes: Dispatch<
+    SetStateAction<
+      Pick<Recipe, "id" | "title" | "image" | "ingredients" | "instructions">[]
+    >
+  >;
+  isFavorite?: boolean;
+  isUserDefined?: boolean;
 }) {
   return (
     <Card
@@ -54,15 +64,38 @@ export default function DishCard({
             View Details
           </Button>
         </RecipeDetailsDialog>
-        {isFavorite ? (
-          <Button className="flex-1" variant="outline">
+        {isFavorite && (
+          <Button
+            className="flex-1"
+            variant="outline"
+            onClick={() =>
+              setFavorites((prev) => prev.filter((item) => item !== recipe.id))
+            }
+          >
             <Heart />
             Remove from Favorites
           </Button>
-        ) : (
-          <Button className="flex-1" variant="outline">
+        )}
+        {!isFavorite && (
+          <Button
+            className="flex-1"
+            variant="outline"
+            onClick={() => setFavorites((prev) => [...prev, recipe.id])}
+          >
             <Heart />
             Save to Favorites
+          </Button>
+        )}
+        {isUserDefined && (
+          <Button
+            className="flex-1"
+            variant="outline"
+            onClick={() =>
+              setRecipes((prev) => prev.filter((item) => item.id !== recipe.id))
+            }
+          >
+            <Heart />
+            Delete Dish
           </Button>
         )}
       </CardFooter>
