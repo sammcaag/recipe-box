@@ -1,15 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import recipeData from "Recipes (1).json";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
-import { Heart } from "lucide-react";
+import DishCard from "./dish-card";
 
 /* 1. Recipe Display 
       ○ Display a list/grid of recipes with basic information
@@ -34,47 +25,45 @@ export default function RecipeDisplay({
     return recipe.title.toLocaleLowerCase().includes(searchQueryInLower);
   });
   return (
-    <div className="grid grid-cols-3 gap-8">
-      {filteredRecipes.map((recipe) => (
-        <Card
-          key={recipe.id}
-          className="pt-0 overflow-hidden"
-          onClick={() => setIsSelected(recipe.id)}
-        >
-          <figure className="h-64 aspect-square">
-            <img
-              src={recipe.image}
-              alt=""
-              className="object-cover h-full w-full"
+    <div className="flex-1 flex flex-col gap-12 items-stretch">
+      <div className="flex-1 ">
+        <h3 className="font-bold text-2xl">User-Defined Dishes</h3>
+        <div className="grid grid-cols-3 gap-8">
+          {filteredRecipes.map((recipe) => (
+            <DishCard
+              isSelected={isSelected}
+              setIsSelected={setIsSelected}
+              recipe={recipe}
             />
-          </figure>
-          <CardHeader>
-            <CardTitle>{recipe.title}</CardTitle>
-            <CardDescription></CardDescription>
-          </CardHeader>
-          {isSelected === recipe.id && (
-            <CardContent>
-              <div className="flex flex-col gap-2">
-                {recipe.ingredients.map((ing) => (
-                  <span>{ing}</span>
-                ))}
-              </div>
-              <div className="flex flex-col gap-2">
-                {recipe.instructions.map((ins) => (
-                  <span>{ins}</span>
-                ))}
-              </div>
-              <div>{recipe.servings} Servings</div>
-            </CardContent>
-          )}
-          <CardFooter>
-            <Button className="" variant="outline">
-              <Heart />
-              Save to Favorites
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="font-bold text-2xl">Default Dishes</h3>
+        <div className="grid grid-cols-3 gap-8">
+          {filteredRecipes.map((recipe) => (
+            <DishCard
+              isSelected={isSelected}
+              setIsSelected={setIsSelected}
+              recipe={recipe}
+            />
+          ))}
+        </div>
+      </div>
+      <div>
+        <h3 className="font-bold text-2xl">Favorites</h3>
+        <div className="grid grid-cols-3 gap-8">
+          {filteredRecipes.map((recipe) => (
+            <DishCard
+              isSelected={isSelected}
+              setIsSelected={setIsSelected}
+              recipe={recipe}
+              isFavorite
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

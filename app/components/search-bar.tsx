@@ -13,9 +13,10 @@ export default function SearchBar({
   setSearchQuery: Dispatch<SetStateAction<string>>;
 }) {
   return (
-    <div className="flex items-center flex-1 gap-4">
-      <h4 className="min-w-fit">Search for Recipes</h4>
+    <div className="flex flex-col flex-1 gap-4">
+      <h4 className="min-w-fit font-semibold text-base">Search for Recipes</h4>
       <Input
+        placeholder="Search..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
